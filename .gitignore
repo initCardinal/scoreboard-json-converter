@@ -44,3 +44,4 @@ dashboard/.env.local
 .DS_Store
 Thumbs.db
 .vscode/
+dashboard/tsconfig.tsbuildinfo
