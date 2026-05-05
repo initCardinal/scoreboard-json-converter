@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.05);
+}
+
+html, body {
+  /* Prevent stray horizontal scroll on small phones */
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@media (min-width: 640px) {
+  body { font-size: 14px; }
+}
+
+/* Make focus rings visible without affecting mouse users */
+:focus-visible {
+  outline: 2px solid #6b7280;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Tailwind handles most things; this just protects code blocks on tiny screens */
+pre, code {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+pre {
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
