@@ -41,7 +41,10 @@ export default function RunConverterPanel({ status, output, notice, onRun, onRef
             </code>
           </div>
         </div>
-        
+        <div className="shrink-0 flex flex-col items-end gap-2">
+          
+          <StatusPill status={status} />
+        </div>
       </div>
 
       <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">

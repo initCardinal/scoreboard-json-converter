@@ -49,6 +49,13 @@ function runPython(pythonBin: string): Promise<{ stdout: string; stderr: string;
 }
 
 export async function POST() {
+  if (process.env.NODE_ENV === "production") {
+    return NextResponse.json({
+      success: false,
+      localOnly: true,
+      
+    });
+  }
 
   // Try each candidate in order; stop at the first that doesn't return "not found".
   let result = { stdout: "", stderr: "No Python executable found.", code: 127 };
