@@ -49,14 +49,6 @@ function runPython(pythonBin: string): Promise<{ stdout: string; stderr: string;
 }
 
 export async function POST() {
-  if (process.env.NODE_ENV === "production") {
-    return NextResponse.json({
-      success: false,
-      localOnly: true,
-      message:
-        "Run Converter is available locally. This deployed preview uses the generated JSON output.",
-    });
-  }
 
   // Try each candidate in order; stop at the first that doesn't return "not found".
   let result = { stdout: "", stderr: "No Python executable found.", code: 127 };

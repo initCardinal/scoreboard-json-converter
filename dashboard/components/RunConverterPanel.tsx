@@ -41,14 +41,7 @@ export default function RunConverterPanel({ status, output, notice, onRun, onRef
             </code>
           </div>
         </div>
-        <div className="shrink-0 flex flex-col items-end gap-2">
-          {IS_PREVIEW && (
-            <span className="text-[10px] uppercase tracking-wide font-medium text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded">
-              Deployed preview
-            </span>
-          )}
-          <StatusPill status={status} />
-        </div>
+        
       </div>
 
       <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
