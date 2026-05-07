@@ -8,14 +8,17 @@ import { Button } from "@/components/ui/Button";
 import { StatusPill } from "@/components/ui/StatusPill";
 import { downloadJson } from "@/lib/download";
 
+const IS_PREVIEW = process.env.NODE_ENV === "production";
+
 interface Props {
   status: DashboardStatus;
   output: ScoreboardOutput | null;
+  notice: string | null;
   onRun: () => void;
   onRefresh: () => void;
 }
 
-export default function RunConverterPanel({ status, output, onRun, onRefresh }: Props) {
+export default function RunConverterPanel({ status, output, notice, onRun, onRefresh }: Props) {
   const busy = status === "converting" || status === "loading_output";
   const hasOutput = output !== null;
 
@@ -38,7 +41,12 @@ export default function RunConverterPanel({ status, output, onRun, onRefresh }: 
             </code>
           </div>
         </div>
-        <div className="shrink-0">
+        <div className="shrink-0 flex flex-col items-end gap-2">
+          {IS_PREVIEW && (
+            <span className="text-[10px] uppercase tracking-wide font-medium text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded">
+              Deployed preview
+            </span>
+          )}
           <StatusPill status={status} />
         </div>
       </div>
@@ -77,6 +85,12 @@ export default function RunConverterPanel({ status, output, onRun, onRefresh }: 
           Download JSON
         </Button>
       </div>
+
+      {notice && (
+        <p className="mt-3 text-xs text-blue-700 bg-blue-50 border border-blue-100 rounded px-3 py-2">
+          {notice}
+        </p>
+      )}
 
       {output?.meta && (
         <p className="mt-4 text-xs text-gray-400 break-words">

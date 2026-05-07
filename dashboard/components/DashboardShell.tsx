@@ -13,7 +13,7 @@ import { LoadingPanel } from "./ui/LoadingPanel";
 import { ErrorPanel } from "./ui/ErrorPanel";
 
 export default function DashboardShell() {
-  const { status, output, error, runConverter, refreshOutput } = useDashboardData();
+  const { status, output, error, notice, runConverter, refreshOutput } = useDashboardData();
   const reduce = useReducedMotionSafe();
   const flatRows = useMemo(() => (output ? flattenRecords(output) : []), [output]);
 
@@ -49,6 +49,7 @@ export default function DashboardShell() {
         <RunConverterPanel
           status={status}
           output={output}
+          notice={notice}
           onRun={runConverter}
           onRefresh={refreshOutput}
         />

@@ -20,6 +20,7 @@ export interface DashboardState {
   status: DashboardStatus;
   output: ScoreboardOutput | null;
   error: DashboardError | null;
+  notice: string | null;
   runConverter: () => Promise<void>;
   refreshOutput: () => Promise<void>;
 }
@@ -37,9 +38,11 @@ export function useDashboardData(): DashboardState {
   const [status, setStatus] = useState<DashboardStatus>("idle");
   const [output, setOutput] = useState<ScoreboardOutput | null>(null);
   const [error, setError] = useState<DashboardError | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
   const refreshOutput = useCallback(async () => {
     setError(null);
+    setNotice(null);
     setStatus("loading_output");
     try {
       const data = await fetchOutput();
@@ -57,10 +60,19 @@ export function useDashboardData(): DashboardState {
 
   const runConverter = useCallback(async () => {
     setError(null);
+    setNotice(null);
     setStatus("converting");
     try {
       const res = await fetch("/api/convert", { method: "POST" });
       const body = await res.json();
+      if (body.localOnly) {
+        setNotice(body.message);
+        setStatus("loading_output");
+        const data = await fetchOutput();
+        setOutput(data);
+        setStatus("ready");
+        return;
+      }
       if (!body.success) {
         setStatus("error");
         setError({
@@ -83,5 +95,5 @@ export function useDashboardData(): DashboardState {
     }
   }, []);
 
-  return { status, output, error, runConverter, refreshOutput };
+  return { status, output, error, notice, runConverter, refreshOutput };
 }

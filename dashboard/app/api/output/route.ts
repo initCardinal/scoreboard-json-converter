@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 import path from "path";
 import fs from "fs";
 
-const OUTPUT_FILE = path.resolve(process.cwd(), "../output.json");
+const OUTPUT_FILE =
+  process.env.NODE_ENV === "production"
+    ? path.resolve(process.cwd(), "public/output.json")
+    : path.resolve(process.cwd(), "../output.json");
 
 export async function GET() {
   if (!fs.existsSync(OUTPUT_FILE)) {
